@@ -287,6 +287,72 @@ const Tools = [
       required: ["data"],
     },
   },
+  {
+    name: "generate_treemap_chart",
+    description:
+      "Generate a treemap chart to display hierarchical data and can intuitively show comparisons between items at the same level, such as, show disk space usage with treemap.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        data: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              name: { type: "string" },
+              value: { type: "number" },
+              children: {
+                type: "array",
+                items: { $ref: "#" },
+              },
+            },
+            required: ["name", "value"],
+          },
+          description:
+            "Data for treemap chart, such as, [{ name: 'Design', value: 70, children: [{ name: 'Tech', value: 20 }] }].",
+        },
+        ...BaseConfig,
+      },
+      required: ["data"],
+    },
+  },
+  {
+    name: "generate_dual_axes_chart",
+    description:
+      "Generate a dual axes chart which is a combination chart that integrates two different chart types, typically combining a bar chart with a line chart to display both the trend and comparison of data, such as, the trend of sales and profit over time.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        width: BaseConfig.width,
+        height: BaseConfig.height,
+        title: BaseConfig.title,
+        axisXTitle: BaseConfig.axisXTitle,
+        categories: {
+          type: "array",
+          items: {
+            type: "string",
+          },
+          description:
+            "Categories for dual axes chart, such as, ['2015', '2016', '2017'].",
+        },
+        series: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              name: { type: "string" },
+              type: { type: "string" },
+              axisYTitle: {
+                type: "string",
+                description: "Set the y-axis title of the chart series.",
+              },
+            },
+          },
+        },
+      },
+      required: ["data"],
+    },
+  },
 ];
 
 /**
@@ -353,6 +419,8 @@ class McpServerChart {
         generate_scatter_chart: "scatter",
         generate_word_cloud_chart: "word-cloud",
         generate_radar_chart: "radar",
+        generate_treemap_chart: "treemap",
+        generate_dual_axis_chart: "dual-axis",
       } as any;
 
       const type = ChartTypeMapping[request.params.name];
