@@ -25,7 +25,7 @@ Now 15+ charts supported.
 - `generate_radar_chart` - Generate a `radar` chart, and return an image URL.
 - `generate_scatter_chart` - Generate a `scatter` chart, and return an image URL.
 - `generate_treemap_chart` - Generate a `treemap` chart, and return an image URL.
-- `generate_word_cloud` - Generate a `word-cloud` chart, and return an image URL.
+- `generate_word_cloud_chart` - Generate a `word-cloud` chart, and return an image URL.
 
 
 ## 🤖 Usage
