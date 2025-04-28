@@ -10,7 +10,15 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 
 const BaseConfig = {
-  title: { type: "string", description: "Set the chart title." },
+  width: {
+    type: "number",
+    description: "Set the width of chart, default is 600.",
+  },
+  height: {
+    type: "number",
+    description: "Set the height of chart, default is 400.",
+  },
+  title: { type: "string", description: "Set the title of chart." },
   axisXTitle: { type: "string", description: "Set the x-axis title of chart." },
   axisYTitle: { type: "string", description: "Set the y-axis title of chart." },
 };
@@ -33,7 +41,12 @@ const Tools = [
             },
           },
           description:
-            "Data for line chart, such as, [{time: '2015', value: '23'}].",
+            "Data for line chart, such as, [{ time: '2015', value: 23 }].",
+        },
+        stack: {
+          type: "boolean",
+          description:
+            "Whether stacking is enabled. When enabled, line charts require a 'group' field in the data.",
         },
         ...BaseConfig,
       },
@@ -59,17 +72,17 @@ const Tools = [
             required: ["category", "value"],
           },
           description:
-            "Data for column chart, such as, [{category: '北京' value: 825; group: '油车'}].",
+            "Data for column chart, such as, [{ category: '北京' value: 825; group: '油车' }].",
         },
         group: {
           type: "boolean",
           description:
-            "Whether grouping is enabled. column charts require a 'group' field in the data.",
+            "Whether grouping is enabled. When enabled, column charts require a 'group' field in the data.",
         },
         stack: {
           type: "boolean",
           description:
-            "Whether stacking is enabled. column charts require a 'stack' field in the data.",
+            "Whether stacking is enabled. When enabled, column charts require a 'group' field in the data.",
         },
         ...BaseConfig,
       },
@@ -94,7 +107,7 @@ const Tools = [
             required: ["category", "value"],
           },
           description:
-            "Data for pie chart, (such as, [{category: '分类一', value: 27 }])",
+            "Data for pie chart, (such as, [{ category: '分类一', value: 27 }])",
         },
         innerRadius: {
           type: "number",
@@ -126,12 +139,12 @@ const Tools = [
             required: ["time", "value"],
           },
           description:
-            "Data for pie chart, such as, [{time: '2018'; value: 99.9 }].",
+            "Data for pie chart, such as, [{ time: '2018'; value: 99.9 }].",
         },
         stack: {
           type: "boolean",
           description:
-            "Whether stacking is enabled. column charts require a 'stack' field in the data.",
+            "Whether stacking is enabled. When enabled, area charts require a 'group' field in the data.",
         },
         ...BaseConfig,
       },
@@ -157,17 +170,17 @@ const Tools = [
             required: ["category", "value"],
           },
           description:
-            "Data for bar chart, such as, [{category: '分类一'; value: 10 }].",
+            "Data for bar chart, such as, [{ category: '分类一'; value: 10 }].",
         },
         group: {
           type: "boolean",
           description:
-            "Whether grouping is enabled. column charts require a 'group' field in the data.",
+            "Whether grouping is enabled. When enabled, bar charts require a 'group' field in the data.",
         },
         stack: {
           type: "boolean",
           description:
-            "Whether stacking is enabled. column charts require a 'stack' field in the data.",
+            "Whether stacking is enabled. When enabled, bar charts require a 'group' field in the data.",
         },
         ...BaseConfig,
       },
@@ -183,11 +196,12 @@ const Tools = [
       properties: {
         data: {
           type: "array",
-          description: "Data for bar chart, such as, [78, 88, 60, 100, 95].",
+          description: "Data for bar chart, such as, [ 78, 88, 60, 100, 95 ].",
         },
         binNumber: {
           type: "number",
-          description: "Number of intervals to define the number of intervals in a histogram.",
+          description:
+            "Number of intervals to define the number of intervals in a histogram.",
         },
         ...BaseConfig,
       },
@@ -211,7 +225,7 @@ const Tools = [
                 y: { type: "number" },
               },
               required: ["x", "y"],
-            }
+            },
           },
           description: "Data for scatter chart, such as, [{ x: 10, y: 15 }].",
         },
@@ -237,15 +251,42 @@ const Tools = [
                 text: { type: "string" },
               },
               required: ["value", "text"],
-            }
+            },
           },
-          description: "Data for word cloud chart, such as, [{ value: '4.272', text: '形成' }].",
+          description:
+            "Data for word cloud chart, such as, [{ value: '4.272', text: '形成' }].",
         },
         ...BaseConfig,
       },
       required: ["data"],
     },
-  }
+  },
+  {
+    name: "generate_radar_chart",
+    description:
+      "Generate a radar chart to display multidimensional data (four dimensions or more), such as, evaluate Huawei and Apple phones in terms of five dimensions: ease of use, functionality, camera, benchmark scores, and battery life.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        data: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              name: { type: "string" },
+              value: { type: "number" },
+              group: { type: "string" },
+            },
+            required: ["name", "value"],
+          },
+          description:
+            "Data for radar chart, such as, [{ name: 'Design', value: 70 }].",
+        },
+        ...BaseConfig,
+      },
+      required: ["data"],
+    },
+  },
 ];
 
 /**
@@ -255,14 +296,18 @@ const Tools = [
  */
 async function generateChartUrl(type: string, options: any): Promise<any> {
   const url = "https://antv-studio.alipay.com/api/gpt-vis";
-  const response = await axios.post(url, {
-    type,
-    ...options,
-  }, {
-    headers: {
-      "Content-Type": "application/json",
+  const response = await axios.post(
+    url,
+    {
+      type,
+      ...options,
     },
-  });
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
 
   return response.data.resultObj;
 }
@@ -280,7 +325,7 @@ class McpServerChart {
         capabilities: {
           tools: {},
         },
-      }
+      },
     );
 
     this.setupToolHandlers();
@@ -306,8 +351,8 @@ class McpServerChart {
         generate_bar_chart: "bar",
         generate_histogram_chart: "histogram",
         generate_scatter_chart: "scatter",
-        generate_word_cloud_chart: "word-cloud"
-
+        generate_word_cloud_chart: "word-cloud",
+        generate_radar_chart: "radar",
       } as any;
 
       const type = ChartTypeMapping[request.params.name];
@@ -315,7 +360,7 @@ class McpServerChart {
       if (!type) {
         throw new McpError(
           ErrorCode.MethodNotFound,
-          `Unknown tool: ${request.params.name}.`
+          `Unknown tool: ${request.params.name}.`,
         );
       }
 
@@ -334,7 +379,7 @@ class McpServerChart {
         if (error instanceof McpError) throw error;
         throw new McpError(
           ErrorCode.InternalError,
-          `Failed to generate chart: ${error?.message || "Unknown error."}`
+          `Failed to generate chart: ${error?.message || "Unknown error."}`,
         );
       }
     });
