@@ -34,7 +34,7 @@ Now 15+ charts supported.
 
 ## 🤖 Usage
 
-To use with `Desktop APP`, such as Claude, VSCode, Cline, Cherry Studio, and so on, add the  MCP server config below. On Mac system:
+To use with `Desktop APP`, such as Claude, VSCode, [Cline](https://cline.bot/mcp-marketplace), Cherry Studio, and so on, add the  MCP server config below. On Mac system:
 
 ```json
 {
@@ -69,6 +69,37 @@ On Window system:
 ```
 
 Also, you can use it on [aliyun](https://bailian.console.aliyun.com/?tab=mcp#/mcp-market/detail/antv-visualization-chart), [modelscope](https://www.modelscope.cn/mcp/servers/@antvis/mcp-server-chart), [glama.ai](https://glama.ai/mcp/servers/@antvis/mcp-server-chart), [smithery.ai](https://smithery.ai/server/@antvis/mcp-server-chart) or others with HTTP, SSE Protocol.
+
+
+## Run with SSE transport
+
+Install the package globally.
+
+```bash
+npm install -g @antv/mcp-server-chart
+```
+
+Run the server with `sse` transport.
+
+```bash
+mcp-server-chart --transport sse
+```
+
+Then you can use the `http://localhost:1122/sse` with `SSE` transport.
+
+
+## CLI Options
+
+You can also use the following CLI options when running the MCP server. Command options by run cli with `-h`.
+
+```plain
+MCP Server Chart CLI
+Options:
+  --transport, -t  Specify the transport protocol: "stdio" or "sse" (default: "stdio")
+  --port, -p       Specify the port for SSE transport (default: 1122)
+  --endpoint, -e   Specify the endpoint for SSE transport (default: "/sse")
+  --help, -h       Show this help message
+```
 
 
 ## 📠 Private Deployment
