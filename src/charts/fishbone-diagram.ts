@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { zodToJsonSchema } from "../utils";
+import { validatedTreeDataSchema } from "../utils/validator";
 import { HeightSchema, ThemeSchema, WidthSchema } from "./base";
 
 // Fishbone node schema
@@ -15,7 +16,10 @@ const FishboneNodeSchema: z.ZodType<any> = z.lazy(() =>
 const schema = z.object({
   data: FishboneNodeSchema.describe(
     "Data for fishbone diagram chart, such as, { name: 'main topic', children: [{ name: 'topic 1', children: [{ name: 'subtopic 1-1' }] }.",
-  ),
+  ).refine(validatedTreeDataSchema, {
+    message: "Invalid parameters: node name is not unique.",
+    path: ["data"],
+  }),
   theme: ThemeSchema,
   width: WidthSchema,
   height: HeightSchema,

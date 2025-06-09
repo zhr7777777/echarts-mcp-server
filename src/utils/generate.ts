@@ -28,6 +28,11 @@ export async function generateChartUrl(
       },
     },
   );
+  const { success, errorMessage, resultObj } = response.data;
 
-  return response.data.resultObj;
+  if (!success) {
+    throw new Error(errorMessage);
+  }
+
+  return resultObj;
 }

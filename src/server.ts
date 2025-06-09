@@ -12,6 +12,7 @@ import {
   startStdioMcpServer,
 } from "./services";
 import { ChartTypeMapping, generateChartUrl } from "./utils";
+import { ValidateError } from "./utils/validator";
 
 /**
  * Creates and configures an MCP server for chart generation.
@@ -20,7 +21,7 @@ export function createServer(): Server {
   const server = new Server(
     {
       name: "mcp-server-chart",
-      version: "0.4.0",
+      version: "0.4.1",
     },
     {
       capabilities: {
@@ -70,8 +71,7 @@ function setupToolHandlers(server: Server): void {
         // Use safeParse instead of parse and try-catch.
         const result = schema.safeParse(args);
         if (!result.success) {
-          throw new McpError(
-            ErrorCode.InvalidParams,
+          throw new ValidateError(
             `Invalid parameters: ${result.error.message}`,
           );
         }
@@ -90,6 +90,9 @@ function setupToolHandlers(server: Server): void {
       // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     } catch (error: any) {
       if (error instanceof McpError) throw error;
+      if (error instanceof ValidateError) {
+        throw new McpError(ErrorCode.InvalidParams, error.message);
+      }
       throw new McpError(
         ErrorCode.InternalError,
         `Failed to generate chart: ${error?.message || "Unknown error."}`,
