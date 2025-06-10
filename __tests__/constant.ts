@@ -1,7 +1,4 @@
-import { describe, expect, it } from "vitest";
-import * as Charts from "../../src/charts";
-
-const mindMapSchema = {
+export const MindMapSchema = {
   type: "mind-map",
   data: {
     name: "剪映视频剪辑指南",
@@ -172,7 +169,7 @@ const mindMapSchema = {
   source: "mcp-server-chart",
 };
 
-const flowDiagramSchema = {
+export const FlowDiagramSchema = {
   type: "network-graph",
   data: {
     nodes: [
@@ -266,25 +263,3 @@ const flowDiagramSchema = {
   height: 600,
   source: "mcp-server-chart",
 };
-
-describe("valid", () => {
-  // Valid mind map bad case
-  it("should valid schema for mind-map chart", () => {
-    const chartType = "mind-map";
-    expect(() => {
-      const schema = Charts[chartType].schema;
-      schema.safeParse(mindMapSchema);
-    }).toThrow("Invalid parameters: node name '文字动画' is not unique.");
-  });
-
-  // Valid flow diagram bad case
-  it("should valid schema for flow diagram chart", () => {
-    const chartType = "flow-diagram";
-    expect(() => {
-      const schema = Charts[chartType].schema;
-      schema.safeParse(flowDiagramSchema);
-    }).toThrow(
-      "Invalid parameters: edge pair 'KnowledgeBase-Model' is not unique.",
-    );
-  });
-});
