@@ -1,5 +1,5 @@
 /**
- * Exports the API for the `@antv/mcp-server-chart` package.
+ * Exports the API for the `echarts-mcp-server` package.
  * This includes chart generation capabilities and utility functions.
  */
 export * from "./charts";

@@ -39,7 +39,7 @@ Also, you can use it on [aliyun](https://bailian.console.aliyun.com/?tab=mcp#/mc
 Install the package globally.
 
 ```bash
-npm install -g @antv/mcp-server-chart
+npm install -g echarts-mcp-server
 ```
 
 Run the server with your preferred transport option:

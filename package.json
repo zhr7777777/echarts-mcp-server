@@ -1,5 +1,5 @@
 {
-  "name": "@zhr/echarts-mcp-server",
+  "name": "echarts-mcp-server",
   "description": "A Model Context Protocol server for generating charts using ECharts, This is a TypeScript-based MCP server that provides chart generation capabilities. It allows you to create various types of charts through MCP tools.",
   "version": "0.0.1",
   "main": "build/index.js",
@@ -26,15 +26,12 @@
     "mcp-server-chart": "./build/index.js"
   },
   "files": ["build"],
-  "keywords": ["antv", "mcp", "data-visualization", "chart"],
+  "keywords": ["mcp", "data-visualization", "chart", "echarts"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/antvis/mcp-server-chart"
+    "url": "https://github.com/zhr7777777/echarts-mcp-server"
   },
-  "author": {
-    "name": "AntV",
-    "url": "https://antv.antgroup.com/"
-  },
+  "author": "zhr7777777",
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.11.4",
