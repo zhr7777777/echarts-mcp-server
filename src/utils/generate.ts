@@ -7,10 +7,9 @@ const base64ToUrlSafeBase64 = (str: string) =>
   str.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 
 /**
- * Generate a chart URL using the provided configuration.
- * @param type The type of chart to generate
+ * Generate a chart preview link using the provided configuration.
  * @param options Chart options
- * @returns {Promise<string>} The generated chart URL.
+ * @returns {Promise<string>} The generated chart preview link.
  * @throws {Error} If the chart generation fails.
  */
 export async function generateChartUrl(

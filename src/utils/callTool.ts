@@ -12,8 +12,8 @@ const CHART_TYPE_MAP = {
 } as const;
 
 /**
- * Call a tool to generate a chart based on the provided name and arguments.
- * @param tool The name of the tool to call, e.g., "generate_area_chart".
+ * Call a tool to generate a chart preview link based on the provided name and arguments.
+ * @param tool The name of the tool to call, e.g., "generate_bar_chart".
  * @param args The arguments for the tool, which should match the expected schema for the chart type.
  * @returns
  */
