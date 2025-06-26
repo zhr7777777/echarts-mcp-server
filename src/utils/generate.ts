@@ -1,5 +1,10 @@
-import axios from "axios";
-import { getVisRequestServer } from "./env";
+import { compressToBase64 } from "lz-string";
+
+const BASE_URL =
+  "https://echarts.apache.org/examples/zh/editor.html?_source=echarts-doc-preview&code=";
+
+const base64ToUrlSafeBase64 = (str: string) =>
+  str.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 
 /**
  * Generate a chart URL using the provided configuration.
@@ -9,30 +14,17 @@ import { getVisRequestServer } from "./env";
  * @throws {Error} If the chart generation fails.
  */
 export async function generateChartUrl(
-  type: string,
+  // type: string,
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   options: Record<string, any>,
 ): Promise<string> {
-  const url = getVisRequestServer();
+  const code = `
+  option = ${JSON.stringify(options, null, 2)}
+  `;
 
-  const response = await axios.post(
-    url,
-    {
-      type,
-      ...options,
-      source: "mcp-server-chart",
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
-  );
-  const { success, errorMessage, resultObj } = response.data;
+  const base64 = compressToBase64(code);
 
-  if (!success) {
-    throw new Error(errorMessage);
-  }
+  const urlSafeBase64 = base64ToUrlSafeBase64(base64);
 
-  return resultObj;
+  return `${BASE_URL}${urlSafeBase64}`;
 }

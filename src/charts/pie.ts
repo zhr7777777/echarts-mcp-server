@@ -1,31 +1,43 @@
 import { z } from "zod";
+import BaseSchema from "../schemas/base";
 import { zodToJsonSchema } from "../utils";
-import { HeightSchema, ThemeSchema, TitleSchema, WidthSchema } from "./base";
 
 // Pie chart data schema
 const data = z.object({
-  category: z.string(),
-  value: z.number(),
+  name: z.string().describe("name of date item."),
+  value: z.number().describe("value of date item."),
 });
 
+const SeriesItemSchema = z.object({
+  type: z.literal("pie"),
+  name: z
+    .string()
+    .optional()
+    .describe(
+      "Series name used for displaying in tooltip and filtering with legend.",
+    ),
+  label: z
+    .object({
+      show: z.boolean().describe("Whether to show label."),
+      color: z.string().describe("Text color."),
+    })
+    .default({
+      show: true,
+      color: "#000",
+    })
+    .describe(
+      "Text label of pie chart, to explain some data information about graphic item like value, name and so on. ",
+    ),
+  data: z.array(data).describe("Data array of series"),
+});
 // Pie chart input schema
 const schema = {
-  data: z
-    .array(data)
+  ...BaseSchema,
+  series: z
+    .array(SeriesItemSchema)
     .describe(
-      "Data for pie chart, such as, [{ category: '分类一', value: 27 }].",
-    )
-    .nonempty({ message: "Pie chart data cannot be empty." }),
-  innerRadius: z
-    .number()
-    .default(0)
-    .describe(
-      "Set the innerRadius of pie chart, the value between 0 and 1. Set the pie chart as a donut chart. Set the value to 0.6 or number in [0 ,1] to enable it.",
+      "The pie chart is mainly used for showing proportion of different categories. Each arc length represents the proportion of data quantity.",
     ),
-  theme: ThemeSchema,
-  width: WidthSchema,
-  height: HeightSchema,
-  title: TitleSchema,
 };
 
 // Pie chart tool descriptor

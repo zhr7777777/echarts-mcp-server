@@ -1,49 +1,44 @@
 import { z } from "zod";
+import BaseSchema from "../schemas/base";
 import { zodToJsonSchema } from "../utils";
-import {
-  AxisXTitleSchema,
-  AxisYTitleSchema,
-  HeightSchema,
-  ThemeSchema,
-  TitleSchema,
-  WidthSchema,
-} from "./base";
 
-// Bar chart data schema
-const data = z.object({
-  category: z.string(),
-  value: z.number(),
-  group: z.string().optional(),
+const SeriesItemSchema = z.object({
+  type: z.literal("bar"),
+  name: z
+    .string()
+    .optional()
+    .describe(
+      "Series name used for displaying in tooltip and filtering with legend.",
+    ),
+  label: z
+    .object({
+      show: z.boolean().describe("Whether to show label."),
+      color: z.string().optional().describe("Text color."),
+    })
+    .default({
+      show: true,
+    })
+    .describe(
+      "Text label of , to explain some data information about graphic item like value, name and so on. ",
+    ),
+  data: z.array(z.number()).describe("Data array of series."),
+  stack: z
+    .string()
+    .optional()
+    .describe(`
+    Name of stack. On the same category axis, the series with the same stack name would be put on top of each other.
+    Notice: stack only supports stacking on value and log axis for now. time and category axis are not supported.
+`),
 });
 
 // Bar chart input schema
 const schema = {
-  data: z
-    .array(data)
+  ...BaseSchema,
+  series: z
+    .array(SeriesItemSchema)
     .describe(
-      "Data for bar chart, such as, [{ category: '分类一', value: 10 }].",
-    )
-    .nonempty({ message: "Bar chart data cannot be empty." }),
-  group: z
-    .boolean()
-    .optional()
-    .default(false)
-    .describe(
-      "Whether grouping is enabled. When enabled, bar charts require a 'group' field in the data. When `group` is true, `stack` should be false.",
+      "Bar chart shows different data through the height of a bar, which is used in rectangular coordinate with at least 1 category axis.",
     ),
-  stack: z
-    .boolean()
-    .optional()
-    .default(true)
-    .describe(
-      "Whether stacking is enabled. When enabled, bar charts require a 'group' field in the data. When `stack` is true, `group` should be false.",
-    ),
-  theme: ThemeSchema,
-  width: WidthSchema,
-  height: HeightSchema,
-  title: TitleSchema,
-  axisXTitle: AxisXTitleSchema,
-  axisYTitle: AxisYTitleSchema,
 };
 
 // Bar chart tool descriptor
