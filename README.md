@@ -1,6 +1,6 @@
 # ECharts MCP Server  ![](https://badge.mcpx.dev?type=server 'MCP Server')  [![build](https://github.com/antvis/mcp-server-chart/actions/workflows/build.yml/badge.svg)](https://github.com/antvis/mcp-server-chart/actions/workflows/build.yml) [![npm Version](https://img.shields.io/npm/v/@antv/mcp-server-chart.svg)](https://www.npmjs.com/package/@antv/mcp-server-chart) [![smithery badge](https://smithery.ai/badge/@antvis/mcp-server-chart)](https://smithery.ai/server/@antvis/mcp-server-chart) [![npm License](https://img.shields.io/npm/l/@antv/mcp-server-chart.svg)](https://www.npmjs.com/package/@antv/mcp-server-chart)
 
-A Model Context Protocol server for generating charts using [ECharts](https://echarts.apache.org/).
+A Model Context Protocol server for generating charts using [ECharts](https://echarts.apache.org/) inspired by [AntV](https://www.npmjs.com/package/@antv/mcp-server-chart).
 
 This is a TypeScript-based MCP server that provides chart generation capabilities. It allows you to create various types of charts through MCP tools. You can also use it in [Dify](https://marketplace.dify.ai/plugins/antv/visualization).
 
@@ -13,6 +13,7 @@ Now 3 charts supported.
 - `generate_line_chart` - Generate a `line` chart, and return an chart preview URL.
 - `generate_pie_chart` - Generate a `pie` chart, and return an chart preview URL.
 
+More options and charts support coming soon...
 
 ## 🤖 Usage
 
@@ -25,6 +26,22 @@ To use with `Desktop APP`, such as Claude, VSCode, [Cline](https://cline.bot/mcp
       "command": "node",
       "args": [
         "your-path/echarts-mcp-server/build/index.js"
+      ]
+    }
+  }
+}
+```
+
+Or
+
+```json
+{
+  "mcpServers": {
+    "echarts-server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "echarts-mcp-server"
       ]
     }
   }
@@ -46,10 +63,10 @@ Run the server with your preferred transport option:
 
 ```bash
 # For SSE transport (default endpoint: /sse)
-mcp-server-chart --transport sse
+echarts-mcp-server --transport sse
 
 # For Streamable transport with custom endpoint
-mcp-server-chart --transport streamable
+echarts-mcp-server --transport streamable
 ```
 
 Then you can access the server at:
