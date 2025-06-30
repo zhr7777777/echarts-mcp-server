@@ -63,7 +63,7 @@ const schema = {
 const tool = {
   name: "generate_pie_chart",
   description:
-    "Generate a pie chart to show the proportion of parts, such as, market share and budget allocation.",
+    "Generate a pie chart preview link(not a chart image) which users can click to show the proportion of parts, such as, market share and budget allocation.",
   inputSchema: zodToJsonSchema(schema),
 };
 
