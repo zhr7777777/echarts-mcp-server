@@ -17,8 +17,8 @@ import { callTool } from "./utils/callTool";
 export function createServer(): Server {
   const server = new Server(
     {
-      name: "mcp-server-chart",
-      version: "0.0.1",
+      name: "echarts-mcp-server",
+      version: "0.0.4",
     },
     {
       capabilities: {

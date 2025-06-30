@@ -12,7 +12,7 @@ const CHART_TYPE_MAP = {
 } as const;
 
 /**
- * Call a tool to generate a chart preview link based on the provided name and arguments.
+ * Call a tool to generate a chart preview link(not an image) based on the provided name and arguments.
  * @param tool The name of the tool to call, e.g., "generate_bar_chart".
  * @param args The arguments for the tool, which should match the expected schema for the chart type.
  * @returns
@@ -40,13 +40,14 @@ export async function callTool(tool: string, args: object = {}) {
       }
     }
 
-    const url = await generateChartUrl(args);
+    const chartPreviewUrl = await generateChartUrl(args);
 
     return {
       content: [
         {
           type: "text",
-          text: url,
+          // text is a chart preview url, not a chart image url
+          text: chartPreviewUrl,
         },
       ],
     };
