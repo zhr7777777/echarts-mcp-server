@@ -48,6 +48,26 @@ formatter: '{b}: {d}'
       "Text label of pie chart, to explain some data information about graphic item like value, name and so on. ",
     ),
   data: z.array(data).describe("Data array of series"),
+  radius: z
+    .union([z.string(), z.number(), z.array(z.union([z.string(), z.number()]))])
+    .optional()
+    .default([0, "75%"])
+    .describe(`
+Radius of Pie chart. Value can be:
+number: Specify outside radius directly.
+string: For example, '20%', means that the outside radius is 20% of the viewport size (the little one between width and height of the chart container).
+Array.<number|string>: The first item specifies the inside radius, and the second item specifies the outside radius. Each item follows the definitions above.
+Donut chart can be achieved by setting a inner radius.
+`),
+  itemStyle: z.object({
+    borderRadius: z
+      .number()
+      .optional()
+      .default(10)
+      .describe(
+        "To specify the roundness for corners of the sectors of the pie chart. It can be either a specific pixel value or a percentage value relative to the radius of the sector.",
+      ),
+  }),
 });
 // Pie chart input schema
 const schema = {

@@ -18,7 +18,7 @@ export { line } from "./line";
 export { pie } from "./pie";
 // export { radar } from "./radar";
 // export { sankey } from "./sankey";
-// export { scatter } from "./scatter";
+export { scatter } from "./scatter";
 // export { treemap } from "./treemap";
 // export { venn } from "./venn";
 // export { violin } from "./violin";

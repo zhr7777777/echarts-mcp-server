@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const XAxisSchema = z
+const xAxisOptionSchema = z
   .object({
     type: z
       .enum(["value", "category", "time", "log"])
@@ -17,9 +17,20 @@ const XAxisSchema = z
       .array(z.string())
       .optional()
       .describe("Name list of all categories."),
+    name: z.string().optional().describe("Name of axis."),
+    position: z
+      .enum(["top", "bottom"])
+      .optional()
+      .describe(`The position of x axis.
+options:
+'top'
+'bottom'
+The first x axis in grid defaults to be on the bottom of the grid, and the second x axis is on the other side against the first x axis.`),
   })
   .describe(
     "The x axis in cartesian(rectangular) coordinate. Usually a single grid component can place at most 2 x axis, one on the bottom and another on the top. offset can be used to avoid overlap when you need to put more than two x axis.",
   );
+
+const XAxisSchema = z.array(xAxisOptionSchema);
 
 export default XAxisSchema;
