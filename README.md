@@ -7,14 +7,12 @@ This is a TypeScript-based MCP server that provides chart generation capabilitie
 
 ## ✨ Features
 
-Now 3 charts supported.
+Now 4 charts supported.
 
 - `generate_bar_chart` - Generate a `bar` chart, and return an chart preview URL.
 - `generate_line_chart` - Generate a `line` chart, and return an chart preview URL.
 - `generate_pie_chart` - Generate a `pie` chart, and return an chart preview URL.
 - `generate_scatter_chart` - Generate a `scatter` chart, and return an chart preview URL.
-
-More tools are coming soon...
 
 ## 🤖 Usage
 
