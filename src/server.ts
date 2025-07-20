@@ -18,7 +18,7 @@ export function createServer(): Server {
   const server = new Server(
     {
       name: "echarts-mcp-server",
-      version: "0.0.7",
+      version: "0.0.8",
     },
     {
       capabilities: {

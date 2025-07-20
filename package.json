@@ -1,7 +1,7 @@
 {
   "name": "echarts-mcp-server",
   "description": "A Model Context Protocol server for generating charts using ECharts, This is a TypeScript-based MCP server that provides chart generation capabilities. It allows you to create various types of charts through MCP tools.",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "exports": {

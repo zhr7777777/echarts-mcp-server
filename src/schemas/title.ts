@@ -10,6 +10,12 @@ const TitleSchema = z
       .string()
       .optional()
       .describe("Subtitle text, supporting for \n for newlines."),
+    left: z
+      .enum(["left", "center", "right"])
+      .default("center")
+      .describe(
+        "Distance between title component and the top side of the container.",
+      ),
   })
   .describe("Title component, including main title and subtitle.");
 
