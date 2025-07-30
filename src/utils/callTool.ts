@@ -10,6 +10,9 @@ const CHART_TYPE_MAP = {
   generate_line_chart: "line",
   generate_pie_chart: "pie",
   generate_scatter_chart: "scatter",
+  generate_radar_chart: "radar",
+  generate_heatmap_chart: "heatmap",
+  generate_general_chart: "general",
 } as const;
 
 /**
